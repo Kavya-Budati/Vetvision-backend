@@ -1,0 +1,30 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### IDEs ###
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.settings/
+.project
+.classpath
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Secrets & Local properties ###
+.env
+.env.*
+!.env.example
+application-local.properties
+
+### Logs & Dumps ###
+hs_err_pid*.log
+replay_pid*.log
+*.hprof
+*.log
