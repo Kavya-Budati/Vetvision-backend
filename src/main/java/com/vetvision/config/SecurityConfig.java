@@ -59,12 +59,17 @@ public class SecurityConfig {
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource(@Value("${app.cors.allowed-origin}") String frontendOrigin) {
+    CorsConfigurationSource corsConfigurationSource(@Value("${app.cors.allowed-origin:http://127.0.0.1:5173}") String frontendOrigin) {
         CorsConfiguration cors = new CorsConfiguration();
-        cors.setAllowedOrigins(List.of(frontendOrigin));
+        java.util.List<String> origins = java.util.Arrays.stream(frontendOrigin.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toList();
+        cors.setAllowedOriginPatterns(origins);
         cors.setAllowedMethods(List.of("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"));
         cors.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         cors.setExposedHeaders(List.of("Location"));
+        cors.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/**", cors);
         return source;
